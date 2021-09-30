@@ -46,15 +46,13 @@ class BSCContract(AbstractContract):
 class BEP20Token(object):
 
     def __init__(self, object):
-        self.symbol = object.contract.functions.symbol().call()
         self.functions = object.contract.functions
-        self.address = object.contract.address
         
 
     def get_balance(self, wallet_address):
         raw_balance = self.functions.balanceOf(wallet_address).call()
         DECIMALS = 10 ** self.functions.decimals().call()
         balance = raw_balance // DECIMALS
-        print('The balance of token {} on wallet {} equal to:'.format(self.symbol, wallet_address),
+        print('The balance of token {} on wallet {} equal to:'.format(self.functions.symbol().call(), wallet_address),
               Web3.fromWei(balance, 'ether'))
 
